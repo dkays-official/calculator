@@ -1,21 +1,41 @@
-
+let display = document.querySelector("input");
 let str = "";
-function myFunction() {
-  let buttons = document.querySelectorAll('button');
+let opt = document.querySelectorAll(".opt");
+
+function calc() {
+  let buttons = document.querySelectorAll("button"); 
   for (let i = 0; i < buttons.length; i++) {
-    buttons[i].addEventListener('click', function () {
-      let val = buttons[i].innerHTML;
+    buttons[i].addEventListener("click", function () {      
+     let val = buttons[i].innerHTML;         
+
       if (buttons[i].innerHTML === "Clear") {
-        document.querySelector("input").value = "";
-      }
-      else if (val !== "=") {
+        display.value = "";
+        str = "";
+      } else if (val !== "=") {       
         str += val;
-        document.querySelector("input").value = str;
-      }
-      else if (val === "=") {
-        document.querySelector("input").value = eval(str);
-      }
+        optCheck(str);
+        display.value = str;
+      } else if (val === "=") {
+        optCheck(str);
+        console.log(str);
+        str = eval(str);
+        display.value = str;
+      }      
     });
   }
 }
-myFunction();
+calc();
+
+function slicer(str) {
+  
+    for (let j = 0; j < opt.length; j++) {
+      if (str[str.length - 1] == "+" || "-" || "*" || "/" && str[str.length - 2] == "-" || str[str.length - 2] == "/" || str[str.length - 2] == "*") {
+        str.slice(0,-1);
+        display.value = str;
+      } else {
+        continue;
+      }      
+    }
+    return str;
+}
+
