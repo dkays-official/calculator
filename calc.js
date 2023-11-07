@@ -1,41 +1,61 @@
 let display = document.querySelector("input");
 let str = "";
-let opt = document.querySelectorAll(".opt");
+let opt;
+let num1;
+let num2;
+let index;
 
-function calc() {
-  let buttons = document.querySelectorAll("button"); 
+function optcheck(str) {
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] == "+") {
+      index = i;
+      opt = str[i];
+    } else if (str[i] == "-") {
+      index = i;
+      opt = str[i];
+    } else if (str[i] == "*") {
+      index = i;
+      opt = str[i];
+    } else if (str[i] == "/") {
+      index = i;
+      opt = str[i];
+    }
+  }
+}
+
+function check() {
+  let buttons = document.querySelectorAll("button");
   for (let i = 0; i < buttons.length; i++) {
-    buttons[i].addEventListener("click", function () {      
-     let val = buttons[i].innerHTML;         
+    buttons[i].addEventListener("click", function () {
+      let val = buttons[i].innerHTML;
 
-      if (buttons[i].innerHTML === "Clear") {
+      if (val == "Clear") {
         display.value = "";
-        str = "";
-      } else if (val !== "=") {       
+      } else if (val !== "=") {
         str += val;
-        optCheck(str);
         display.value = str;
       } else if (val === "=") {
-        optCheck(str);
-        console.log(str);
-        str = eval(str);
-        display.value = str;
-      }      
+        optcheck(str);
+        console.log(opt);
+        const myArray = str.split(opt);
+        let res;
+        switch (opt) {
+          case "+":
+            res = myArray[0] + myArray[1];
+            break;
+          case "-":
+            res = myArray[0] - myArray[1];
+            break;
+          case "*":
+            res = myArray[0] * myArray[1];
+            break;
+          case "/":
+            res = myArray[0] / myArray[1];
+            break;
+        }
+        display.value = res;
+      }
     });
   }
 }
-calc();
-
-function slicer(str) {
-  
-    for (let j = 0; j < opt.length; j++) {
-      if (str[str.length - 1] == "+" || "-" || "*" || "/" && str[str.length - 2] == "-" || str[str.length - 2] == "/" || str[str.length - 2] == "*") {
-        str.slice(0,-1);
-        display.value = str;
-      } else {
-        continue;
-      }      
-    }
-    return str;
-}
-
+check();
