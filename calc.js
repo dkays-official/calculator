@@ -20,6 +20,7 @@ function optcheck(str) {
       index = i;
       opt = str[i];
     }
+
   }
 }
 
@@ -28,20 +29,25 @@ function check() {
   for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", function () {
       let val = buttons[i].innerHTML;
+      if (val == "Del") {
+         str = str.slice(0, -1);
+         display.value = str;
+      }
+      else if (val == "Clear") {
+        str = "";
+        display.value = str;
+      }
 
-      if (val == "Clear") {
-        display.value = "";
-      } else if (val !== "=") {
+      else if (val !== "=") {
         str += val;
         display.value = str;
       } else if (val === "=") {
         optcheck(str);
-        console.log(opt);
         const myArray = str.split(opt);
         let res;
         switch (opt) {
           case "+":
-            res = myArray[0] + myArray[1];
+            res = parseFloat(myArray[0]) + parseFloat(myArray[1]);
             break;
           case "-":
             res = myArray[0] - myArray[1];
@@ -59,3 +65,6 @@ function check() {
   }
 }
 check();
+function Del(string) {
+  return string = string.sclice(0, -1);
+}
